@@ -3,15 +3,20 @@ from anthropic import Anthropic
 from dotenv import load_dotenv
 load_dotenv()
 
-client = Anthropic(api_key=os.geenv("ANTHROPIC_API_KEY"))
+client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 def run_chat():
     print("You: (type 'exit' to quit)")
-
+    user_goal=input("enter your goal for today")
+    #bonus 1+2 ,lab3(the summary and the goal):
     system_message = "Your name is Gogo. You are a smart and dry assistant who helps students learn about math,you first answer the answer  the question directly" \
-    "then You explainclearly  always encourage curiosity and and always ask the user if he understands never curse or be mean."
+    "then You explainclearly  always encourage curiosity and and always ask the user if he understands never curse or be mean. the user will " 
+    "the user goal:"+ str(user_goal) + 'always keep it in mind and always try to achive it  \
+    when the user types /summary you have tor review the full conversation and give a structured summary of what was discussed.' 
+    
 
-    history = []
+    history = [] 
+  
 
     #bonus 1+2+3 lab2:
     total_input = 0
@@ -27,7 +32,7 @@ def run_chat():
         history.append({"role": "user", "content": user_input})
 
         
-        print("\nHistory so far:", history)
+        print("History ", history)
 
     
         response = client.messages.create(
@@ -35,7 +40,7 @@ def run_chat():
             max_tokens=300,     
             temperature=0.7,     
             system=system_message,
-            messages=history
+            messages=history,
         )
 
     
@@ -110,11 +115,11 @@ the conversation, so every new reply carries everything that has already been bu
 #--------------------------------------------------------------------------
 #lab3:
 #yes it stays in role because an ai agent follows the rules and goes by them during the whole conversation
-#it stops
+#it tells me to try to ask something about his role(math)
 #refliction lab3:
 #something that is invesible and shapes me and i feel like it controls me is my feelings
 #if i deleted the system message the ai wont have a role and a goal and  then the chat will just be without clear responses
 #if i delete the never rule maybe the agent will be rude sometimes
 #if i wrote in the response format to let the agent be dry then when i delete it the agent wont have a permanent style for answers
-#the api out of credits still didnt solve it!!
+#the api out of credits i thought its only me and then turns out that some api's got leaked and thats the real reason
 #----------------------------------------------------------------------------
